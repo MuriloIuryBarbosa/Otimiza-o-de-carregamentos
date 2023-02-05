@@ -24,7 +24,7 @@ class Parametrization(ViktorParametrization):
 # Definindo os tipos de Pallets 
 
     array = DynamicArray('Escolha os tipos de Pallets e Quantidade')
-    array.pallet_dim = OptionField('Tipo de Pallet', options =['Palete internacional', 'Palete nacional', '116.5 x 116.5 cm: Pallet Australiano','120 x 80 cm: Pallet Europeu','110 x 110 cm: Pallet Asiático'], flex=70, default='120 x 100 cm: Pallet PBR')
+    array.pallet_dim = OptionField('Tipo de Pallet', options =['Palete importado', 'Palete nacional', '116.5 x 116.5 cm: Pallet Australiano','120 x 80 cm: Pallet Europeu','110 x 110 cm: Pallet Asiático'], flex=70, default='Palete nacional')
     array.pallet_quantity = IntegerField('Quantidade', default = 1, flex = 25)
 
 #
@@ -52,8 +52,8 @@ class Controller(ViktorController):
         bx = 5 # buffer x
         by = 5 # buffer y
 
-        pal_12101 = [112 + bx, 228 + by] # Pallet USA
-        pal_1210 = [0.60 + bx, 228 + by]      # Pallet PBR
+        pal_12101 = [120 + bx, 228 + by] # Pallet USA
+        pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
         pal_1111 = [116.5 + bx, 116.5 + by]  # Pallet Austrália
         pal_128 = [120 + bx, 80 + by]        # Pallet Europeu
         pal_11 = [110 + bx, 110 + by]        # Pallet Asiático
@@ -62,7 +62,7 @@ class Controller(ViktorController):
         n_12101, n_1210, n_1111, n_128, n_11 = 0, 0, 0, 0, 0
 
         for pallet in params.array:
-            if pallet.pallet_dim == 'Palete internacional':
+            if pallet.pallet_dim == 'Palete importado':
                 n_12101 += pallet.pallet_quantity
             if pallet.pallet_dim == 'Palete nacional':
                 n_1210 += pallet.pallet_quantity
@@ -148,8 +148,8 @@ class Controller(ViktorController):
         bx = 5 # buffer x
         by = 5 # buffer y
 
-        pal_12101 = [112 + bx, 228 + by] # Pallet USA
-        pal_1210 = [0.60 + bx, 228 + by]      # Pallet PBR
+        pal_12101 = [120 + bx, 228 + by] # Pallet USA
+        pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
         pal_1111 = [116.5 + bx, 116.5 + by]  # Pallet Austrália
         pal_128 = [120 + bx, 80 + by]        # Pallet Europeu
         pal_11 = [110 + bx, 110 + by]         # Pallet Asiático
@@ -159,7 +159,7 @@ class Controller(ViktorController):
         n_12101, n_1210, n_1111, n_128, n_11 = 0, 0, 0, 0, 0
 
         for pallet in params.array:
-             if pallet.pallet_dim == 'Palete internacional':
+             if pallet.pallet_dim == 'Palete importado':
                 n_12101 += pallet.pallet_quantity
              if pallet.pallet_dim == 'Palete nacional':
                 n_1210 += pallet.pallet_quantity
@@ -178,7 +178,7 @@ class Controller(ViktorController):
             b, x, y, w, h, rid = pallet
             length_x = w/100
             length_y = h/100
-            length_z = random.uniform(1,2) #random pallet heights
+            length_z = 130/100 #random.uniform(1,2) #random pallet heights
 
             #create pallet
             pallet_box = SquareBeam(length_x=length_x-0.1, length_y=length_y-0.1, length_z=length_z) #add 0.1 loose space between pallets
