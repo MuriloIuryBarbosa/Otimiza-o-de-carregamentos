@@ -24,7 +24,7 @@ class Parametrization(ViktorParametrization):
 # Definindo os tipos de Pallets 
 
     array = DynamicArray('Escolha os tipos de Pallets e Quantidade')
-    array.pallet_dim = OptionField('Tipo de Pallet', options =['121.9 x 101.6 cm: Pallet USA', '120 x 100 cm: Pallet PBR', '116.5 x 116.5 cm: Pallet Australiano','120 x 80 cm: Pallet Europeu','110 x 110 cm: Pallet Asiático'], flex=70, default='120 x 100 cm: Pallet PBR')
+    array.pallet_dim = OptionField('Tipo de Pallet', options =['Palete internacional', 'Palete nacional', '116.5 x 116.5 cm: Pallet Australiano','120 x 80 cm: Pallet Europeu','110 x 110 cm: Pallet Asiático'], flex=70, default='120 x 100 cm: Pallet PBR')
     array.pallet_quantity = IntegerField('Quantidade', default = 1, flex = 25)
 
 #
@@ -62,9 +62,9 @@ class Controller(ViktorController):
         n_12101, n_1210, n_1111, n_128, n_11 = 0, 0, 0, 0, 0
 
         for pallet in params.array:
-            if pallet.pallet_dim == '121.9 x 101.6 cm: Pallet USA':
+            if pallet.pallet_dim == 'Palete internacional':
                 n_12101 += pallet.pallet_quantity
-            if pallet.pallet_dim == '120 x 100 cm: Pallet PBR':
+            if pallet.pallet_dim == 'Palete nacional':
                 n_1210 += pallet.pallet_quantity
             if pallet.pallet_dim == '116.5 x 116.5 cm: Pallet Australiano':
                 n_1111 += pallet.pallet_quantity
@@ -159,9 +159,9 @@ class Controller(ViktorController):
         n_12101, n_1210, n_1111, n_128, n_11 = 0, 0, 0, 0, 0
 
         for pallet in params.array:
-             if pallet.pallet_dim == '121.9 x 101.6 cm: Pallet USA':
+             if pallet.pallet_dim == 'Palete internacional':
                 n_12101 += pallet.pallet_quantity
-             if pallet.pallet_dim == '120 x 100 cm: Pallet PBR':
+             if pallet.pallet_dim == 'Palete nacional':
                 n_1210 += pallet.pallet_quantity
              if pallet.pallet_dim == '116.5 x 116.5 cm: Pallet Australiano':
                 n_1111 += pallet.pallet_quantity
