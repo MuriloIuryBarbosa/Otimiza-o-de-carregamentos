@@ -14,8 +14,8 @@ def solver(n_12101, n_1210, n_1111, n_128, n_11, bins):
     bx = 5 # buffer x
     by = 5 # buffer y
     
-    pal_12101 = [112 + bx, 228 + by] # Pallet USA
-    pal_1210 = [0.60 + bx, 228 + by]      # Pallet PBR
+    pal_12101 = [120 + bx, 228 + by] # Pallet USA
+    pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
     pal_1111 = [116.5 + bx, 116.5 + by]  # Pallet Austrália
     pal_128 = [120 + bx, 80 + by]        # Pallet Europeu
     pal_11 = [110 + bx, 110 + by]         # Pallet Asiático
