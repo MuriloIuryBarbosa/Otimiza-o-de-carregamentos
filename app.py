@@ -18,15 +18,14 @@ import random
 
 class Parametrization(ViktorParametrization):
     title = Text('# Otimização de carregamento')
-
-    bin_type = OptionField('Qual tipo de veículo?', options=["carreta_bau", "carreta_sider","truck"], default="carreta_bau", flex=90)
-
+    option = OptionField('Tipo de carregamento', options=['Normal', 'Virado'], default='Normal')
+    bin_type = OptionField('Qual tipo de veículo?', options=["carreta_bau", "carreta_sider","truck", "conteiner_hc", "conteiner_nor"], default="truck", flex=90)
 # Definindo os tipos de Pallets 
 
     array = DynamicArray('Escolha os tipos de Pallets e Quantidade')
     array.pallet_dim = OptionField('Tipo de Pallet', options =['Palete importado', 'Palete nacional', '116.5 x 116.5 cm: Pallet Australiano','120 x 80 cm: Pallet Europeu','110 x 110 cm: Pallet Asiático'], flex=70, default='Palete nacional')
     array.pallet_quantity = IntegerField('Quantidade', default = 1, flex = 25)
-
+    
 #
 
 
@@ -47,10 +46,12 @@ class Controller(ViktorController):
         carreta_bau = [(270, 1600)] # Carreta Bau'
         truck = [(270, 1000)] # Truck'
         carreta_sider = [(270, 1400)] # carreta sider'
+        conteiner_hc = [(235, 600)] # Contêiner HC'
+        conteiner_nor = [(235, 600)] # Contêiner HC'
 
         # Dimensões dos pallets (Acrescentando 5cm em cada eixo de folga)
-        bx = 5 # buffer x
-        by = 5 # buffer y
+        bx = 1 # buffer x
+        by = 1 # buffer y
 
         pal_12101 = [120 + bx, 228 + by] # Pallet USA
         pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
@@ -82,6 +83,14 @@ class Controller(ViktorController):
         elif params.bin_type == "carreta_sider":
             bin_type = carreta_sider
             plt.plot([0,270,270,0,0],[0,0,1400,1400,0], linewidth = 2.5, color = "k" )
+
+        elif params.bin_type == "conteiner_hc":
+            bin_type = conteiner_hc
+            plt.plot([0,235,235,0,0],[0,0,600,600,0], linewidth = 2.5, color = "k" )
+
+        elif params.bin_type == "conteiner_nor":
+            bin_type = conteiner_nor
+            plt.plot([0,235,235,0,0],[0,0,600,600,0], linewidth = 2.5, color = "k" )
 
         else:
             bin_type = truck
@@ -135,6 +144,14 @@ class Controller(ViktorController):
         elif params.bin_type == "carreta_sider":
             length_y= 14
             bin_type = [(270, 1400)]
+
+        elif params.bin_type == "conteiner_hc":
+            length_y= 6
+            bin_type = [(235, 600)]
+    
+        elif params.bin_type == "conteiner_nor":
+            length_y= 6
+            bin_type = [(235, 600)]
             
         else:
             length_y=10
@@ -145,8 +162,8 @@ class Controller(ViktorController):
         container.translate([(length_x/2),(length_y/2),(length_z/2)])
 
         # Set Pallet Dimensions
-        bx = 5 # buffer x
-        by = 5 # buffer y
+        bx = 1 # buffer x
+        by = 1 # buffer y
 
         pal_12101 = [120 + bx, 228 + by] # Pallet USA
         pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
@@ -181,11 +198,10 @@ class Controller(ViktorController):
             length_z = 130/100 #random.uniform(1,2) #random pallet heights
 
             #create pallet
-            pallet_box = SquareBeam(length_x=length_x-0.1, length_y=length_y-0.1, length_z=length_z) #add 0.1 loose space between pallets
+            pallet_box = SquareBeam(length_x=length_x-0.02, length_y=length_y-0.02, length_z=length_z) #add 0.1 loose space between pallets
 
             #move pallet to right location (defining the center of the pallet)
             pallet_box.translate([(x/100+0.5*length_x),(y/100+0.5*length_y),(0.5*length_z)])
-            
             #set Material
             
             if [w, h] == pal_12101 or [h, w] == pal_12101:
