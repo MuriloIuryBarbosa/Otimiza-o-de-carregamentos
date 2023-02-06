@@ -11,8 +11,8 @@ def solver(n_12101, n_1210, n_1111, n_128, n_11, bins):
     ''' For optimizing how pallets should be placed in the container. The inputs are the quantities of each pallet type and the container size.'''
 
     # Set Pallet Buffer
-    bx = 5 # buffer x
-    by = 5 # buffer y
+    bx = 1 # buffer x
+    by = 1 # buffer y
     
     pal_12101 = [120 + bx, 228 + by] # Pallet USA
     pal_1210 = [60 + bx, 228 + by]      # Pallet PBR
@@ -27,7 +27,7 @@ def solver(n_12101, n_1210, n_1111, n_128, n_11, bins):
     # Build the Packer
     pack = newPacker(mode = packer.PackingMode.Offline, bin_algo = packer.PackingBin.Global,
                      rotation=True)
-
+    
     # Add the rectangles to packing queue
     for r in rectangles:
         pack.add_rect(*r)
